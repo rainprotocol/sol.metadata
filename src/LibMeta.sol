@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: CAL
-pragma solidity =0.8.16;
+pragma solidity ^0.8.16;
 
 import "./IMetaV1.sol";
 
@@ -28,10 +28,7 @@ library LibMeta {
         }
     }
 
-    function checkMetaHashed(
-        bytes32 expectedHash_,
-        bytes memory meta_
-    ) internal pure {
+    function checkMetaHashed(bytes32 expectedHash_, bytes memory meta_) internal pure {
         bytes32 actualHash_ = keccak256(meta_);
         if (expectedHash_ != actualHash_) {
             revert UnexpectedMetaHash(expectedHash_, actualHash_);
