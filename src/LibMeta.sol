@@ -3,12 +3,6 @@ pragma solidity ^0.8.16;
 
 import "./IMetaV1.sol";
 
-error UnexpectedMetaHash(bytes32 expectedHash, bytes32 actualHash);
-
-/// Thrown when some bytes are expected to be rain meta and are not.
-/// @param unmeta the bytes that are not meta.
-error NotRainMetaV1(bytes unmeta);
-
 /// @title LibMeta
 /// @notice Need a place to put data that can be handled offchain like ABIs that
 /// IS NOT etherscan.
