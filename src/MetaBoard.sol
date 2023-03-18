@@ -10,13 +10,4 @@ contract MetaBoard is IMetaBoardV1 {
         LibMeta.checkMetaUnhashed(meta_);
         emit MetaV1(msg.sender, meta_);
     }
-
-    /// @inheritdoc IMetaBoardV1
-    function emitMetas(bytes[] calldata metas_) external {
-        unchecked {
-            for (uint256 i_ = 0; i_ < metas_.length; i_++) {
-                emitMeta(metas_[i_]);
-            }
-        }
-    }
 }
