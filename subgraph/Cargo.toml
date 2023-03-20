@@ -1,0 +1,12 @@
+[package]
+name = "subgraph"
+version = "0.1.0"
+edition = "2021"
+CFLAGS_aarch64_apple_darwin='-arch arm64'
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+web3 = "0.18.0"
+ethcontract = "0.23.2"
+tokio = { version = "1.16", features = ["full"] }
+dotenv = "0.15.0"

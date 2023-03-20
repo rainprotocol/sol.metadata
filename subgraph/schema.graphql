@@ -1,0 +1,13 @@
+type MetaBoard @entity {
+    id:Bytes!
+    address: Bytes!
+    metas: [MetaV1!] @derivedFrom(field: "metaBoard")
+}
+
+type MetaV1 @entity {
+    id:ID!
+    sender: Bytes!
+    meta: Bytes!
+    metaBoard: MetaBoard!
+}
+

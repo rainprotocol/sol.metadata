@@ -1,0 +1,524 @@
+{
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "bytes",
+          "name": "unmeta",
+          "type": "bytes"
+        }
+      ],
+      "name": "NotRainMetaV1",
+      "type": "error"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "sender",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "bytes",
+          "name": "meta",
+          "type": "bytes"
+        }
+      ],
+      "name": "MetaV1",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes",
+          "name": "meta_",
+          "type": "bytes"
+        }
+      ],
+      "name": "emitMeta",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": {
+    "object": "0x608060405234801561001057600080fd5b506102be806100206000396000f3fe608060405234801561001057600080fd5b506004361061002b5760003560e01c80630fd7cf2314610030575b600080fd5b61004361003e366004610140565b610045565b005b61008482828080601f0160208091040260200160405190810160405280939291908181526020018383808284376000920191909152506100c392505050565b7ffe0d7cdfc02f75938b0ef2d979de3a96348a06852e8d986e03c08c563816fe953383836040516100b7939291906101b2565b60405180910390a15050565b6100cc81610110565b61010d57806040517f644cc258000000000000000000000000000000000000000000000000000000008152600401610104919061021c565b60405180910390fd5b50565b600060088251101561012457506000919050565b506008015167ffffffffffffffff1667ff0a89c674ee78741490565b6000806020838503121561015357600080fd5b823567ffffffffffffffff8082111561016b57600080fd5b818501915085601f83011261017f57600080fd5b81358181111561018e57600080fd5b8660208285010111156101a057600080fd5b60209290920196919550909350505050565b73ffffffffffffffffffffffffffffffffffffffff8416815260406020820152816040820152818360608301376000818301606090810191909152601f9092017fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe016010192915050565b600060208083528351808285015260005b818110156102495785810183015185820160400152820161022d565b5060006040828601015260407fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe0601f830116850101925050509291505056fea2646970667358221220282c7b418a5fac15be7d8bc3258ee7284e26177d22e6cd7f6302efef4e45845e64736f6c63430008100033",
+    "sourceMap": "112:212:20:-:0;;;;;;;;;;;;;;;;;;;",
+    "linkReferences": {}
+  },
+  "deployedBytecode": {
+    "object": "0x608060405234801561001057600080fd5b506004361061002b5760003560e01c80630fd7cf2314610030575b600080fd5b61004361003e366004610140565b610045565b005b61008482828080601f0160208091040260200160405190810160405280939291908181526020018383808284376000920191909152506100c392505050565b7ffe0d7cdfc02f75938b0ef2d979de3a96348a06852e8d986e03c08c563816fe953383836040516100b7939291906101b2565b60405180910390a15050565b6100cc81610110565b61010d57806040517f644cc258000000000000000000000000000000000000000000000000000000008152600401610104919061021c565b60405180910390fd5b50565b600060088251101561012457506000919050565b506008015167ffffffffffffffff1667ff0a89c674ee78741490565b6000806020838503121561015357600080fd5b823567ffffffffffffffff8082111561016b57600080fd5b818501915085601f83011261017f57600080fd5b81358181111561018e57600080fd5b8660208285010111156101a057600080fd5b60209290920196919550909350505050565b73ffffffffffffffffffffffffffffffffffffffff8416815260406020820152816040820152818360608301376000818301606090810191909152601f9092017fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe016010192915050565b600060208083528351808285015260005b818110156102495785810183015185820160400152820161022d565b5060006040828601015260407fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe0601f830116850101925050509291505056fea2646970667358221220282c7b418a5fac15be7d8bc3258ee7284e26177d22e6cd7f6302efef4e45845e64736f6c63430008100033",
+    "sourceMap": "112:212:20:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;186:136;;;;;;:::i;:::-;;:::i;:::-;;;243:32;269:5;;243:32;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;-1:-1:-1;243:25:20;;-1:-1:-1;;;243:32:20:i;:::-;290:25;297:10;309:5;;290:25;;;;;;;;:::i;:::-;;;;;;;;186:136;;:::o;1075:155:19:-;1151:19;1164:5;1151:12;:19::i;:::-;1146:78;;1207:5;1193:20;;;;;;;;;;;:::i;:::-;;;;;;;;1146:78;1075:155;:::o;550:376::-;615:4;650:1;635:5;:12;:16;631:34;;;-1:-1:-1;660:5:19;;550:376;-1:-1:-1;550:376:19:o;631:34::-;-1:-1:-1;846:1:19;835:13;829:20;691:16;825:32;667:18:18;883:36:19;;550:376::o;14:591:23:-;84:6;92;145:2;133:9;124:7;120:23;116:32;113:52;;;161:1;158;151:12;113:52;201:9;188:23;230:18;271:2;263:6;260:14;257:34;;;287:1;284;277:12;257:34;325:6;314:9;310:22;300:32;;370:7;363:4;359:2;355:13;351:27;341:55;;392:1;389;382:12;341:55;432:2;419:16;458:2;450:6;447:14;444:34;;;474:1;471;464:12;444:34;519:7;514:2;505:6;501:2;497:15;493:24;490:37;487:57;;;540:1;537;530:12;487:57;571:2;563:11;;;;;593:6;;-1:-1:-1;14:591:23;;-1:-1:-1;;;;14:591:23:o;610:567::-;807:42;799:6;795:55;784:9;777:74;887:2;882;871:9;867:18;860:30;926:6;921:2;910:9;906:18;899:34;983:6;975;970:2;959:9;955:18;942:48;1039:1;1010:22;;;1034:2;1006:31;;;999:42;;;;1093:2;1081:15;;;1098:66;1077:88;1062:104;1058:113;;610:567;-1:-1:-1;;610:567:23:o;1182:605::-;1292:4;1321:2;1350;1339:9;1332:21;1382:6;1376:13;1425:6;1420:2;1409:9;1405:18;1398:34;1450:1;1460:140;1474:6;1471:1;1468:13;1460:140;;;1569:14;;;1565:23;;1559:30;1535:17;;;1554:2;1531:26;1524:66;1489:10;;1460:140;;;1464:3;1649:1;1644:2;1635:6;1624:9;1620:22;1616:31;1609:42;1778:2;1708:66;1703:2;1695:6;1691:15;1687:88;1676:9;1672:104;1668:113;1660:121;;;;1182:605;;;;:::o",
+    "linkReferences": {}
+  },
+  "methodIdentifiers": {
+    "emitMeta(bytes)": "0fd7cf23"
+  },
+  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.16+commit.07a7930e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"bytes\",\"name\":\"unmeta\",\"type\":\"bytes\"}],\"name\":\"NotRainMetaV1\",\"type\":\"error\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"sender\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"bytes\",\"name\":\"meta\",\"type\":\"bytes\"}],\"name\":\"MetaV1\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"bytes\",\"name\":\"meta_\",\"type\":\"bytes\"}],\"name\":\"emitMeta\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"errors\":{\"NotRainMetaV1(bytes)\":[{\"params\":{\"unmeta\":\"the bytes that are not meta.\"}}]},\"kind\":\"dev\",\"methods\":{\"emitMeta(bytes)\":{\"params\":{\"meta\":\"Bytes to be emitted as metadata.\"}}},\"version\":1},\"userdoc\":{\"errors\":{\"NotRainMetaV1(bytes)\":[{\"notice\":\"Thrown when some bytes are expected to be rain meta and are not.\"}]},\"events\":{\"MetaV1(address,bytes)\":{\"notice\":\"An onchain wrapper to carry arbitrary Rain metadata. Assigns the sender to the metadata so that tooling can easily drop/ignore data from unknown sources.\"}},\"kind\":\"user\",\"methods\":{\"emitMeta(bytes)\":{\"notice\":\"Emit a single MetaV1 event. Typically this is sufficient for most use cases as a single MetaV1 event can contain many metas as a single cbor-seq. Metadata MUST match the metadata V1 specification for Rain metadata or tooling MAY drop it. `IMetaBoardV1` contracts MUST revert any metadata that does not start with the Rain metadata magic number.\"}},\"version\":1}},\"settings\":{\"compilationTarget\":{\"src/MetaBoard.sol\":\"MetaBoard\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":100000},\"remappings\":[\":ds-test/=lib/forge-std/lib/ds-test/src/\",\":forge-std/=lib/forge-std/src/\"]},\"sources\":{\"src/IMetaBoardV1.sol\":{\"keccak256\":\"0x0a9746970fd73e17735c88132b951327e974ee31ce038878d40cc6350406ba63\",\"license\":\"CAL\",\"urls\":[\"bzz-raw://075a20d5ce0ec97a6b1c6d5ba16e4f16307e8849c9eb36c053b717fdad008c39\",\"dweb:/ipfs/Qma9BpSWi1Qq4jcLbFXma7AiQyPeGjp4WRTMjUPx4wKBrS\"]},\"src/IMetaV1.sol\":{\"keccak256\":\"0xca1bc9eacf6f06ea23a31541e3183c3253f42f6c7016f77b1f8bda1b32c3baab\",\"license\":\"CAL\",\"urls\":[\"bzz-raw://1eaee79030000094b57e68f6df2a1f96e12391fb6245ddabce880fa2bb8ab9be\",\"dweb:/ipfs/Qmbmfr67S7DvzixtCUGVnKAZJaL6TkcPC38FvAC9AnJt6w\"]},\"src/LibMeta.sol\":{\"keccak256\":\"0xff659866cf6cdf8f163d7e8d2b7d6e23635d68ce15d2d5d967652082f318aa85\",\"license\":\"CAL\",\"urls\":[\"bzz-raw://4790b323570edaee9efd7f64e9d5436ce27843182ce2512b85d6af0e1b771e6b\",\"dweb:/ipfs/QmeHRKdbBxzo3Vzq22zjmuBGYnvvnhdKBX4Nn285mzV868\"]},\"src/MetaBoard.sol\":{\"keccak256\":\"0xf7828a71267da1e55529738ee496c7ae0a8ea154a78dbcf3f97cb2f8ac9d2d4a\",\"license\":\"CAL\",\"urls\":[\"bzz-raw://d65e3a600105a143266bb7ac0058b62e286abfc03c51ddd1b305d17471d94fb0\",\"dweb:/ipfs/QmYybhUTpRtPjhPjWN6kEP1iEwJE4UMk4XkUApHqq3otAB\"]}},\"version\":1}",
+  "metadata": {
+    "compiler": {
+      "version": "0.8.16+commit.07a7930e"
+    },
+    "language": "Solidity",
+    "output": {
+      "abi": [
+        {
+          "inputs": [
+            {
+              "internalType": "bytes",
+              "name": "unmeta",
+              "type": "bytes"
+            }
+          ],
+          "type": "error",
+          "name": "NotRainMetaV1"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "sender",
+              "type": "address",
+              "indexed": false
+            },
+            {
+              "internalType": "bytes",
+              "name": "meta",
+              "type": "bytes",
+              "indexed": false
+            }
+          ],
+          "type": "event",
+          "name": "MetaV1",
+          "anonymous": false
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes",
+              "name": "meta_",
+              "type": "bytes"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "emitMeta"
+        }
+      ],
+      "devdoc": {
+        "kind": "dev",
+        "methods": {
+          "emitMeta(bytes)": {
+            "params": {
+              "meta": "Bytes to be emitted as metadata."
+            }
+          }
+        },
+        "version": 1
+      },
+      "userdoc": {
+        "kind": "user",
+        "methods": {
+          "emitMeta(bytes)": {
+            "notice": "Emit a single MetaV1 event. Typically this is sufficient for most use cases as a single MetaV1 event can contain many metas as a single cbor-seq. Metadata MUST match the metadata V1 specification for Rain metadata or tooling MAY drop it. `IMetaBoardV1` contracts MUST revert any metadata that does not start with the Rain metadata magic number."
+          }
+        },
+        "version": 1
+      }
+    },
+    "settings": {
+      "remappings": [
+        ":ds-test/=lib/forge-std/lib/ds-test/src/",
+        ":forge-std/=lib/forge-std/src/"
+      ],
+      "optimizer": {
+        "enabled": true,
+        "runs": 100000
+      },
+      "metadata": {
+        "bytecodeHash": "ipfs"
+      },
+      "compilationTarget": {
+        "src/MetaBoard.sol": "MetaBoard"
+      },
+      "libraries": {}
+    },
+    "sources": {
+      "src/IMetaBoardV1.sol": {
+        "keccak256": "0x0a9746970fd73e17735c88132b951327e974ee31ce038878d40cc6350406ba63",
+        "urls": [
+          "bzz-raw://075a20d5ce0ec97a6b1c6d5ba16e4f16307e8849c9eb36c053b717fdad008c39",
+          "dweb:/ipfs/Qma9BpSWi1Qq4jcLbFXma7AiQyPeGjp4WRTMjUPx4wKBrS"
+        ],
+        "license": "CAL"
+      },
+      "src/IMetaV1.sol": {
+        "keccak256": "0xca1bc9eacf6f06ea23a31541e3183c3253f42f6c7016f77b1f8bda1b32c3baab",
+        "urls": [
+          "bzz-raw://1eaee79030000094b57e68f6df2a1f96e12391fb6245ddabce880fa2bb8ab9be",
+          "dweb:/ipfs/Qmbmfr67S7DvzixtCUGVnKAZJaL6TkcPC38FvAC9AnJt6w"
+        ],
+        "license": "CAL"
+      },
+      "src/LibMeta.sol": {
+        "keccak256": "0xff659866cf6cdf8f163d7e8d2b7d6e23635d68ce15d2d5d967652082f318aa85",
+        "urls": [
+          "bzz-raw://4790b323570edaee9efd7f64e9d5436ce27843182ce2512b85d6af0e1b771e6b",
+          "dweb:/ipfs/QmeHRKdbBxzo3Vzq22zjmuBGYnvvnhdKBX4Nn285mzV868"
+        ],
+        "license": "CAL"
+      },
+      "src/MetaBoard.sol": {
+        "keccak256": "0xf7828a71267da1e55529738ee496c7ae0a8ea154a78dbcf3f97cb2f8ac9d2d4a",
+        "urls": [
+          "bzz-raw://d65e3a600105a143266bb7ac0058b62e286abfc03c51ddd1b305d17471d94fb0",
+          "dweb:/ipfs/QmYybhUTpRtPjhPjWN6kEP1iEwJE4UMk4XkUApHqq3otAB"
+        ],
+        "license": "CAL"
+      }
+    },
+    "version": 1
+  },
+  "ast": {
+    "absolutePath": "src/MetaBoard.sol",
+    "id": 28539,
+    "exportedSymbols": {
+      "IMetaBoardV1": [
+        28401
+      ],
+      "IMetaV1": [
+        28428
+      ],
+      "LibMeta": [
+        28512
+      ],
+      "META_MAGIC_NUMBER_V1": [
+        28419
+      ],
+      "MetaBoard": [
+        28538
+      ],
+      "NotRainMetaV1": [
+        28415
+      ],
+      "UnexpectedMetaHash": [
+        28410
+      ]
+    },
+    "nodeType": "SourceUnit",
+    "src": "32:293:20",
+    "nodes": [
+      {
+        "id": 28514,
+        "nodeType": "PragmaDirective",
+        "src": "32:24:20",
+        "nodes": [],
+        "literals": [
+          "solidity",
+          "=",
+          "0.8",
+          ".16"
+        ]
+      },
+      {
+        "id": 28515,
+        "nodeType": "ImportDirective",
+        "src": "58:28:20",
+        "nodes": [],
+        "absolutePath": "src/IMetaBoardV1.sol",
+        "file": "./IMetaBoardV1.sol",
+        "nameLocation": "-1:-1:-1",
+        "scope": 28539,
+        "sourceUnit": 28402,
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "id": 28516,
+        "nodeType": "ImportDirective",
+        "src": "87:23:20",
+        "nodes": [],
+        "absolutePath": "src/LibMeta.sol",
+        "file": "./LibMeta.sol",
+        "nameLocation": "-1:-1:-1",
+        "scope": 28539,
+        "sourceUnit": 28513,
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "id": 28538,
+        "nodeType": "ContractDefinition",
+        "src": "112:212:20",
+        "nodes": [
+          {
+            "id": 28537,
+            "nodeType": "FunctionDefinition",
+            "src": "186:136:20",
+            "nodes": [],
+            "body": {
+              "id": 28536,
+              "nodeType": "Block",
+              "src": "233:89:20",
+              "nodes": [],
+              "statements": [
+                {
+                  "expression": {
+                    "arguments": [
+                      {
+                        "id": 28527,
+                        "name": "meta_",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 28521,
+                        "src": "269:5:20",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bytes_calldata_ptr",
+                          "typeString": "bytes calldata"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bytes_calldata_ptr",
+                          "typeString": "bytes calldata"
+                        }
+                      ],
+                      "expression": {
+                        "id": 28524,
+                        "name": "LibMeta",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 28512,
+                        "src": "243:7:20",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_type$_t_contract$_LibMeta_$28512_$",
+                          "typeString": "type(library LibMeta)"
+                        }
+                      },
+                      "id": 28526,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberLocation": "251:17:20",
+                      "memberName": "checkMetaUnhashed",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 28482,
+                      "src": "243:25:20",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_internal_pure$_t_bytes_memory_ptr_$returns$__$",
+                        "typeString": "function (bytes memory) pure"
+                      }
+                    },
+                    "id": 28528,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "nameLocations": [],
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "243:32:20",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 28529,
+                  "nodeType": "ExpressionStatement",
+                  "src": "243:32:20"
+                },
+                {
+                  "eventCall": {
+                    "arguments": [
+                      {
+                        "expression": {
+                          "id": 28531,
+                          "name": "msg",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": -15,
+                          "src": "297:3:20",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_magic_message",
+                            "typeString": "msg"
+                          }
+                        },
+                        "id": 28532,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "memberLocation": "301:6:20",
+                        "memberName": "sender",
+                        "nodeType": "MemberAccess",
+                        "src": "297:10:20",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      },
+                      {
+                        "id": 28533,
+                        "name": "meta_",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 28521,
+                        "src": "309:5:20",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bytes_calldata_ptr",
+                          "typeString": "bytes calldata"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        },
+                        {
+                          "typeIdentifier": "t_bytes_calldata_ptr",
+                          "typeString": "bytes calldata"
+                        }
+                      ],
+                      "id": 28530,
+                      "name": "MetaV1",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 28427,
+                      "src": "290:6:20",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$_t_address_$_t_bytes_memory_ptr_$returns$__$",
+                        "typeString": "function (address,bytes memory)"
+                      }
+                    },
+                    "id": 28534,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "nameLocations": [],
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "290:25:20",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 28535,
+                  "nodeType": "EmitStatement",
+                  "src": "285:30:20"
+                }
+              ]
+            },
+            "baseFunctions": [
+              28400
+            ],
+            "documentation": {
+              "id": 28519,
+              "nodeType": "StructuredDocumentation",
+              "src": "153:28:20",
+              "text": "@inheritdoc IMetaBoardV1"
+            },
+            "functionSelector": "0fd7cf23",
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "emitMeta",
+            "nameLocation": "195:8:20",
+            "parameters": {
+              "id": 28522,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 28521,
+                  "mutability": "mutable",
+                  "name": "meta_",
+                  "nameLocation": "219:5:20",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28537,
+                  "src": "204:20:20",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_calldata_ptr",
+                    "typeString": "bytes"
+                  },
+                  "typeName": {
+                    "id": 28520,
+                    "name": "bytes",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "204:5:20",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_storage_ptr",
+                      "typeString": "bytes"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "203:22:20"
+            },
+            "returnParameters": {
+              "id": 28523,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "233:0:20"
+            },
+            "scope": 28538,
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "public"
+          }
+        ],
+        "abstract": false,
+        "baseContracts": [
+          {
+            "baseName": {
+              "id": 28517,
+              "name": "IMetaBoardV1",
+              "nameLocations": [
+                "134:12:20"
+              ],
+              "nodeType": "IdentifierPath",
+              "referencedDeclaration": 28401,
+              "src": "134:12:20"
+            },
+            "id": 28518,
+            "nodeType": "InheritanceSpecifier",
+            "src": "134:12:20"
+          }
+        ],
+        "canonicalName": "MetaBoard",
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "fullyImplemented": true,
+        "linearizedBaseContracts": [
+          28538,
+          28401,
+          28428
+        ],
+        "name": "MetaBoard",
+        "nameLocation": "121:9:20",
+        "scope": 28539,
+        "usedErrors": [
+          28415
+        ]
+      }
+    ],
+    "license": "CAL"
+  },
+  "id": 20
+}
