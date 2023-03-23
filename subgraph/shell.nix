@@ -43,11 +43,11 @@ let
   '';
 
   docker-up = pkgs.writeShellScriptBin "docker-up" ''
-    docker compose -f docker/docker-compose.yaml up -d
+    docker-compose -f docker/docker-compose.yml up --build -d
   '';
 
-  docker-down = pkgs.writeShellScriptBin "docker-up" ''
-    docker compose -f docker/docker-compose.yaml stop
+  docker-down = pkgs.writeShellScriptBin "docker-down" ''
+    docker-compose -f docker/docker-compose.yml down
   '';
 
   ci-test = pkgs.writeShellScriptBin "ci-test" ''
