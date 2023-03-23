@@ -1,3 +1,4 @@
+import { BigInt } from "@graphprotocol/graph-ts";
 import { MetaV1 as MetaV1Event} from "../generated/MetaBoard/MetaBoard";
 import { MetaBoard, MetaV1 } from "../generated/schema"
 export function handleMetaV1(event: MetaV1Event): void {
@@ -5,6 +6,7 @@ export function handleMetaV1(event: MetaV1Event): void {
     if(!metaBoard){
         metaBoard = new MetaBoard(event.address);
         metaBoard.address = event.address;
+        metaBoard.metaCount = BigInt.fromI32(0);
         metaBoard.save();
     }
 
@@ -13,4 +15,7 @@ export function handleMetaV1(event: MetaV1Event): void {
     metaV1.meta = event.params.meta;
     metaV1.metaBoard = event.address;
     metaV1.save();
+
+    metaBoard.metaCount = metaBoard.metaCount.plus(BigInt.fromI32(1));
+    metaBoard.save();
 }

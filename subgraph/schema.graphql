@@ -1,6 +1,7 @@
 type MetaBoard @entity {
     id:Bytes!
     address: Bytes!
+    metaCount: BigInt!
     metas: [MetaV1!] @derivedFrom(field: "metaBoard")
 }
 

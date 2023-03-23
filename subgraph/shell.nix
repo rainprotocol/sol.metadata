@@ -19,14 +19,19 @@ let
     rm -rf cache
     rm -rf node_modules
     rm -rf abis
+    rm -rf artifacts
+    rm -rf build
+    rm -rf contracts
+    rm -rf generated
+    rm -rf typechain
   '';
 
   init = pkgs.writeShellScriptBin "init" ''
-    rm -rf data
-    mkdir -p abis
-    cp ../out/MetaBoard.sol/MetaBoard.json abis/
-    cargo update
-    ethcontract generate abis/MetaBoard.json contract.bin -n MetaBoard --output-dir src
+    npm install
+    rm -rf docker/data
+    mkdir -p contracts && cp ../src/* contracts
+    compile
+    mkdir -p abis && cp artifacts/contracts/MetaBoard.sol/MetaBoard.json abis
   '';
 
   codegen = pkgs.writeShellScriptBin "codegen" ''
@@ -38,17 +43,25 @@ let
   '';
 
   docker-up = pkgs.writeShellScriptBin "docker-up" ''
-    docker-compose up -d
+    docker compose -f docker/docker-compose.yaml up -d
+  '';
+
+  docker-down = pkgs.writeShellScriptBin "docker-up" ''
+    docker compose -f docker/docker-compose.yaml stop
   '';
 
   ci-test = pkgs.writeShellScriptBin "ci-test" ''
-    npx mustache config/localhost.json subgraph.template.yaml subgraph.yaml
     codegen
+    npx mustache config/localhost.json subgraph.template.yaml subgraph.yaml
+    npm run test
   '';
 
-  local-test = pkgs.writeShellScriptBin "local-test" ''
+  compile = pkgs.writeShellScriptBin "compile" ''
+    hardhat compile --force
+  '';
+
+  ci-prepare-subgraph = pkgs.writeShellScriptBin "ci-prepair-subgraph" ''
     npx mustache config/localhost.json subgraph.template.yaml subgraph.yaml
-    codegen
   '';
 
 in
@@ -58,25 +71,20 @@ pkgs.stdenv.mkDerivation {
     pkgs.nixpkgs-fmt
     pkgs.yarn
     pkgs.nodejs-16_x
-    pkgs.rustup
-    pkgs.cargo
     prettier-check
     prettier-write
     flush-all
     init
     codegen
+    compile
     build
     ci-test
-    local-test
     docker-up
+    docker-down
+    ci-prepare-subgraph
   ];
 
   shellHook = ''
     export PATH=$( npm bin ):$PATH
-    export CARGO_HOME="$HOME/.cargo"
-    export PATH="$CARGO_HOME/bin:$PATH"c
-    # keep it fresh
-    npm i
-    init
   '';
 }
