@@ -11,6 +11,7 @@ describe("MetaBoard test", function() {
   before(async () => {
     let MetaBoard = await ethers.getContractFactory("MetaBoard");
     metaBoard = (await MetaBoard.deploy()) as MetaBoard;
+    await metaBoard.deployed();
   });
 
   it("Should deploy metaBoard contract", async () => {
