@@ -6,7 +6,6 @@ import { ethers } from "hardhat";
 import * as path from "path";
 import { ApolloFetch, createApolloFetch } from "apollo-fetch";
 
-
 export const META_MAGIC_NUMBER_V1 = 0xff0a89c674ee7874;
 export const writeFile = (_path: string, file: any): void => {
   try {
