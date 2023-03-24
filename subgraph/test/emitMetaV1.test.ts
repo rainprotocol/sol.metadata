@@ -4,6 +4,7 @@ import {
   fetchFile,
   fetchSubgraph,
   getEventArgs,
+  waitForGraphNode,
   waitForSubgraphToBeSynced,
   writeFile,
 } from "./utils";
@@ -18,6 +19,8 @@ describe("MetaBoard MetaV1 event tests", () => {
   let metaBoard: MetaBoard;
   let subgraph: ApolloFetch;
   before(async () => {
+    await waitForGraphNode();
+    
     let MetaBoard = await ethers.getContractFactory("MetaBoard");
     metaBoard = (await MetaBoard.deploy()) as MetaBoard;
     await metaBoard.deployed();

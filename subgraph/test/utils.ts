@@ -216,3 +216,21 @@ export const waitForSubgraphToBeSynced = async (
 
   return resp;
 };
+
+function sleep(milliseconds: number) {  
+  return new Promise(resolve => setTimeout(resolve, milliseconds));  
+}  
+
+export const waitForGraphNode = async (): Promise<void> => {
+  while (true) {
+    try {
+      const response = await fetch("http://localhost:8030");
+      if (response.status === 200) {
+        break;
+      }
+    } catch (error) {
+      console.log("graph node not ready : ", error);
+      await sleep(1000 * 2);
+    }
+  }
+};
