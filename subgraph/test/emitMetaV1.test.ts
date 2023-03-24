@@ -1,16 +1,52 @@
-import { metaBoard, subgraph } from "./1_factory";
 import {
   encodeMeta,
+  exec,
+  fetchFile,
+  fetchSubgraph,
   getEventArgs,
   waitForSubgraphToBeSynced,
+  writeFile,
 } from "./utils";
-import { MetaV1Event } from "../typechain/MetaBoard";
-import { FetchResult } from "apollo-fetch";
+import { MetaBoard, MetaV1Event } from "../typechain/MetaBoard";
+import { ApolloFetch, FetchResult } from "apollo-fetch";
 import assert from "assert";
 import { ethers } from "hardhat";
+import * as path from "path";
 
 describe("MetaBoard MetaV1 event tests", () => {
-    let metaCount = 0;
+  let metaCount = 0;
+  let metaBoard: MetaBoard;
+  let subgraph: ApolloFetch;
+  before(async () => {
+    let MetaBoard = await ethers.getContractFactory("MetaBoard");
+    metaBoard = (await MetaBoard.deploy()) as MetaBoard;
+    await metaBoard.deployed();
+
+    let configPath = path.resolve(__dirname, "../config/localhost.json");
+    const config = JSON.parse(fetchFile(configPath));
+
+    config.network = "localhost";
+    config.MetaBoard = metaBoard.address;
+    config.MetaBoardBlock = metaBoard.deployTransaction.blockNumber;
+
+    writeFile(configPath, JSON.stringify(config, null, 2));
+
+    // create subgraph instance
+    exec("graph create --node http://localhost:8020/ test/test");
+
+    // prepare subgraph manifest
+    exec(
+      "npx mustache config/localhost.json subgraph.template.yaml subgraph.yaml"
+    );
+
+    // deploy subgraph
+    exec(
+      "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 test/test  --version-label 1"
+    );
+
+    subgraph = fetchSubgraph("test/test");
+  });
+
   it("Should emit emitMeta event", async () => {
     let trx = await metaBoard.emitMeta(encodeMeta("Hello"));
     metaCount++;
@@ -108,10 +144,10 @@ describe("MetaBoard MetaV1 event tests", () => {
     assert.equal(metaData.metaBoard.id, metaBoard.address.toLowerCase());
   });
 
-  it("Should add 200 new notices",async () => {
-    for(let i=0;i<50;i++){
-        await metaBoard.emitMeta(encodeMeta(i.toString()));
-        metaCount++;
+  it("Should add 200 new notices", async () => {
+    for (let i = 0; i < 50; i++) {
+      await metaBoard.emitMeta(encodeMeta(i.toString()));
+      metaCount++;
     }
 
     await waitForSubgraphToBeSynced();
@@ -122,9 +158,13 @@ describe("MetaBoard MetaV1 event tests", () => {
         }
       }`;
 
-      const response = (await subgraph({query})) as FetchResult;
-      const _metaCount = response.data.metaBoard.metaCount;
+    const response = (await subgraph({ query })) as FetchResult;
+    const _metaCount = response.data.metaBoard.metaCount;
 
-      assert.equal(_metaCount, metaCount, `Incorrect metaCount ${metaCount} - ${metaCount}`);
+    assert.equal(
+      _metaCount,
+      metaCount,
+      `Incorrect metaCount ${metaCount} - ${metaCount}`
+    );
   });
 });
