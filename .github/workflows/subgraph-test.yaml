@@ -19,14 +19,15 @@ jobs:
         with:
           nix_path: nixpkgs=channel:nixos-unstable
 
+      - name: install npm dependencies
+        run: |
+          nix-shell --run init
+          
       - name: Build Docker Compose images
         run: |
           nix-shell --run docker-down
           nix-shell --run docker-up
       
-      - name: install npm dependencies
-        run: |
-          nix-shell --run init
 
       - name: Run Subgraph tests
         run: nix-shell --run ci-test
