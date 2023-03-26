@@ -1,5 +1,5 @@
 import {
-  encodeMeta,
+  appendRainMetaDoc,
   exec,
   fetchFile,
   fetchSubgraph,
@@ -17,53 +17,59 @@ import { artifacts, ethers } from "hardhat";
 import * as path from "path";
 import { cborEncode } from "./cbor";
 
+const { arrayify, toUtf8Bytes } = ethers.utils;
+
 describe("MetaBoard MetaV1 event tests", () => {
   let metaCount = 0;
   let metaBoard: MetaBoard;
   let subgraph: ApolloFetch;
   before(async () => {
     await waitForGraphNode();
-
     let MetaBoard = await ethers.getContractFactory("MetaBoard");
     metaBoard = (await MetaBoard.deploy()) as MetaBoard;
     await metaBoard.deployed();
-
     let configPath = path.resolve(__dirname, "../config/localhost.json");
     const config = JSON.parse(fetchFile(configPath));
-
     config.network = "localhost";
     config.MetaBoard = metaBoard.address;
     config.MetaBoardBlock = metaBoard.deployTransaction.blockNumber;
-
     writeFile(configPath, JSON.stringify(config, null, 2));
-
     // create subgraph instance
     exec("graph create --node http://localhost:8020/ test/test");
-
     // prepare subgraph manifest
     exec(
       "npx mustache config/localhost.json subgraph.template.yaml subgraph.yaml"
     );
-
     // deploy subgraph
     exec(
       "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 test/test  --version-label 1"
     );
-
     subgraph = fetchSubgraph("test/test");
   });
 
   it("Should emit emitMeta event", async () => {
-    const encodedData = cborEncode(
-      (await artifacts.readArtifact("MetaBoard")).abi.toString(),
-      MAGIC_NUMBERS.SOLIDITY_ABIV2,
-      "application/json",
-      {
-        contentEncoding: "deflate",
-      }
+    // This get the ABI (which is an object) and stringify it to a JSON string.
+    const abiString = JSON.stringify(
+      (await artifacts.readArtifact("MetaBoard")).abi,
+      null,
+      2
     );
 
-    let trx = await metaBoard.emitMeta(encodeMeta(encodedData));
+    // Take an string an convert it to an Uint8Array representation (UTF-8 bytes)
+    const abiU8A = toUtf8Bytes(abiString);
+
+    // Using the Uint8Array representation (which is a byte representaiton), BUT
+    // using the buffer, so the CBOR encoder on Javascript could encoding it as
+    // bytes
+    const abiBytes = arrayify(abiU8A).buffer;
+
+    const encodedData = cborEncode(
+      abiBytes,
+      MAGIC_NUMBERS.SOLIDITY_ABIV2,
+      "application/json"
+    );
+
+    let trx = await metaBoard.emitMeta(appendRainMetaDoc(encodedData));
     metaCount++;
     const { sender, meta } = (await getEventArgs(
       trx,
@@ -124,7 +130,7 @@ describe("MetaBoard MetaV1 event tests", () => {
 
     const eventEmitter = signers[2];
 
-    const encodedMeta = encodeMeta(eventEmitter.address);
+    const encodedMeta = appendRainMetaDoc(eventEmitter.address);
 
     let trx = await metaBoard.connect(eventEmitter).emitMeta(encodedMeta);
     metaCount++;
@@ -179,7 +185,7 @@ describe("MetaBoard MetaV1 event tests", () => {
         }
       );
 
-      await metaBoard.emitMeta(encodeMeta(encodedData));
+      await metaBoard.emitMeta(appendRainMetaDoc(encodedData));
       metaCount++;
     }
 

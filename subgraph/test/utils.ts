@@ -48,12 +48,14 @@ export const getEventArgs = async (
   );
 };
 
-export const encodeMeta = (data: string) => {
-  return (
-    "0x" +
-    MAGIC_NUMBERS.RAIN_META_DOCUMENT.toString(16).toLowerCase() +
-    hexlify(ethers.utils.toUtf8Bytes(data)).split("x")[1]
-  );
+export const appendRainMetaDoc = (data: string | string[]) => {
+  const startMeta = "0x" + MAGIC_NUMBERS.RAIN_META_DOCUMENT.toString(16);
+
+  if (Array.isArray(data)) {
+    return startMeta + data.join("");
+  } else {
+    return startMeta + data;
+  }
 };
 
 export const MAGIC_NUMBERS = {
@@ -217,9 +219,9 @@ export const waitForSubgraphToBeSynced = async (
   return resp;
 };
 
-function sleep(milliseconds: number) {  
-  return new Promise(resolve => setTimeout(resolve, milliseconds));  
-}  
+function sleep(milliseconds: number) {
+  return new Promise((resolve) => setTimeout(resolve, milliseconds));
+}
 
 export const waitForGraphNode = async (): Promise<void> => {
   while (true) {
