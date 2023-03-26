@@ -4,6 +4,8 @@ import {
   fetchFile,
   fetchSubgraph,
   getEventArgs,
+  MAGIC_NUMBERS,
+  META_MAGIC_NUMBER_V1,
   waitForGraphNode,
   waitForSubgraphToBeSynced,
   writeFile,
@@ -11,8 +13,9 @@ import {
 import { MetaBoard, MetaV1Event } from "../typechain/MetaBoard";
 import { ApolloFetch, FetchResult } from "apollo-fetch";
 import assert from "assert";
-import { ethers } from "hardhat";
+import { artifacts, ethers } from "hardhat";
 import * as path from "path";
+import { cborEncode } from "./cbor";
 
 describe("MetaBoard MetaV1 event tests", () => {
   let metaCount = 0;
@@ -20,7 +23,7 @@ describe("MetaBoard MetaV1 event tests", () => {
   let subgraph: ApolloFetch;
   before(async () => {
     await waitForGraphNode();
-    
+
     let MetaBoard = await ethers.getContractFactory("MetaBoard");
     metaBoard = (await MetaBoard.deploy()) as MetaBoard;
     await metaBoard.deployed();
@@ -51,7 +54,16 @@ describe("MetaBoard MetaV1 event tests", () => {
   });
 
   it("Should emit emitMeta event", async () => {
-    let trx = await metaBoard.emitMeta(encodeMeta("Hello"));
+    const encodedData = cborEncode(
+      (await artifacts.readArtifact("MetaBoard")).abi.toString(),
+      MAGIC_NUMBERS.SOLIDITY_ABIV2,
+      "application/json",
+      {
+        contentEncoding: "deflate",
+      }
+    );
+
+    let trx = await metaBoard.emitMeta(encodeMeta(encodedData));
     metaCount++;
     const { sender, meta } = (await getEventArgs(
       trx,
@@ -99,6 +111,15 @@ describe("MetaBoard MetaV1 event tests", () => {
   });
 
   it("Should emit emitMeta event with diff signers", async () => {
+    const encodedData = cborEncode(
+      (await artifacts.readArtifact("MetaBoard")).abi.toString(),
+      MAGIC_NUMBERS.SOLIDITY_ABIV2,
+      "application/json",
+      {
+        contentEncoding: "deflate",
+      }
+    );
+
     const signers = await ethers.getSigners();
 
     const eventEmitter = signers[2];
@@ -149,7 +170,16 @@ describe("MetaBoard MetaV1 event tests", () => {
 
   it("Should add 200 new notices", async () => {
     for (let i = 0; i < 50; i++) {
-      await metaBoard.emitMeta(encodeMeta(i.toString()));
+      const encodedData = cborEncode(
+        (await artifacts.readArtifact("MetaBoard")).abi.toString(),
+        MAGIC_NUMBERS.SOLIDITY_ABIV2,
+        "application/json",
+        {
+          contentEncoding: "deflate",
+        }
+      );
+
+      await metaBoard.emitMeta(encodeMeta(encodedData));
       metaCount++;
     }
 

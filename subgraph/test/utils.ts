@@ -229,7 +229,7 @@ export const waitForGraphNode = async (): Promise<void> => {
         break;
       }
     } catch (error) {
-      console.log("graph node not ready : ", error);
+      console.log("graph node not ready");
       await sleep(1000 * 2);
     }
   }
