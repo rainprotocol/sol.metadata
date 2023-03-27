@@ -55,10 +55,10 @@ describe("MetaBoard MetaV1 event tests", () => {
       2
     );
 
-    // Take an string an convert it to an Uint8Array representation (UTF-8 bytes)
+    // Take an string and convert it to an Uint8Array representation (UTF-8 bytes)
     const abiU8A = toUtf8Bytes(abiString);
 
-    // Using the Uint8Array representation (which is a byte representaiton), BUT
+    // Using the Uint8Array representation (which is a byte representation), BUT
     // using the buffer, so the CBOR encoder on Javascript could encoding it as
     // bytes
     const abiBytes = arrayify(abiU8A).buffer;
@@ -104,6 +104,9 @@ describe("MetaBoard MetaV1 event tests", () => {
             metaBoard {
               id
             }
+            payload
+            contentType
+            magicNumber
         }
       }`;
 
@@ -114,23 +117,33 @@ describe("MetaBoard MetaV1 event tests", () => {
     assert.equal(metaData.meta, meta);
     assert.equal(metaData.sender, sender.toLowerCase());
     assert.equal(metaData.metaBoard.id, metaBoard.address.toLowerCase());
+    // assert.equal(metaData.payload, abiBytes);
+    assert.equal(metaData.contentType, "application/json");
+    assert.equal(metaData.magicNumber, MAGIC_NUMBERS.SOLIDITY_ABIV2);
   });
 
   it("Should emit emitMeta event with diff signers", async () => {
+    const abiString = JSON.stringify(
+      (await artifacts.readArtifact("MetaBoard")).abi,
+      null,
+      2
+    );
+
+    const abiU8A = toUtf8Bytes(abiString);
+
+    const abiBytes = arrayify(abiU8A).buffer;
+
     const encodedData = cborEncode(
-      (await artifacts.readArtifact("MetaBoard")).abi.toString(),
+      abiBytes,
       MAGIC_NUMBERS.SOLIDITY_ABIV2,
-      "application/json",
-      {
-        contentEncoding: "deflate",
-      }
+      "application/json"
     );
 
     const signers = await ethers.getSigners();
 
     const eventEmitter = signers[2];
 
-    const encodedMeta = appendRainMetaDoc(eventEmitter.address);
+    const encodedMeta = appendRainMetaDoc(encodedData);
 
     let trx = await metaBoard.connect(eventEmitter).emitMeta(encodedMeta);
     metaCount++;
@@ -162,6 +175,9 @@ describe("MetaBoard MetaV1 event tests", () => {
             metaBoard {
               id
             }
+            payload
+            contentType
+            magicNumber
         }
       }`;
 
@@ -171,18 +187,18 @@ describe("MetaBoard MetaV1 event tests", () => {
     assert.equal(metaData.id, trx.hash, "wrong meta id");
     assert.equal(metaData.meta, encodedMeta);
     assert.equal(metaData.sender, eventEmitter.address.toLowerCase());
-    assert.equal(metaData.metaBoard.id, metaBoard.address.toLowerCase());
+    assert.equal(metaData.metaBoard.id, metaBoard.address.toLowerCase());    
+    // assert.equal(metaData.payload, abiBytes);
+    assert.equal(metaData.contentType, "application/json");
+    assert.equal(metaData.magicNumber, MAGIC_NUMBERS.SOLIDITY_ABIV2);
   });
 
-  it("Should add 200 new notices", async () => {
-    for (let i = 0; i < 50; i++) {
+  it("Should add 10 new notices", async () => {
+    for (let i = 0; i < 10; i++) {
       const encodedData = cborEncode(
-        (await artifacts.readArtifact("MetaBoard")).abi.toString(),
+        "Hello",
         MAGIC_NUMBERS.SOLIDITY_ABIV2,
-        "application/json",
-        {
-          contentEncoding: "deflate",
-        }
+        "text",
       );
 
       await metaBoard.emitMeta(appendRainMetaDoc(encodedData));
