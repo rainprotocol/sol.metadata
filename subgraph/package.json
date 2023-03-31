@@ -21,8 +21,11 @@
     "@nomiclabs/hardhat-waffle": "^2.0.5",
     "@typechain/hardhat": "^6.1.5",
     "@types/mocha": "^10.0.1",
+    "@types/node": "^18.15.11",
     "apollo-fetch": "^0.7.0",
     "assert": "^2.0.0",
+    "commander": "^10.0.0",
+    "dotenv": "^16.0.3",
     "ts-node": "^10.9.1",
     "typechain": "^8.1.1",
     "typescript": "^5.0.2"

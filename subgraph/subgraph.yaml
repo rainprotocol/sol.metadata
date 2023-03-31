@@ -4,11 +4,11 @@ schema:
 dataSources:
   - kind: ethereum/contract
     name: MetaBoard
-    network: localhost
+    network: mumbai
     source:
-      address: "0x06b3244b086cecC40F1e5A826f736Ded68068a0F"
+      address: "0x30B7E78AB8A3Db68A8c15d4e5Ac78B0A1bD542c0"
       abi: MetaBoard
-      startBlock: 335
+      startBlock: 32268923e
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
