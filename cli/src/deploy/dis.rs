@@ -13,7 +13,8 @@ impl DISpair {
     }
 }
  
- 
+// Replace all the origin network DISpair contracts instances by 
+// DISpair instances of target network 
 pub fn replace_dis_pair(
     tx_data : &String ,
     from_dis : &DISpair , 

@@ -1,16 +1,17 @@
-use clap::{Args, Subcommand};
+use clap::{Subcommand, Parser};
 use crate::deploy::{registry::RainNetworks, deploy_contract, dis::DISpair};  
 
+/// CLI utility to cross deploy Rain Contracts
 #[derive(Subcommand)]
 pub enum CrossDeploy{
     /// Cross Deploy a Rain consumer contract 
     DeployConsumer(Consumer)
 }
 
-#[derive(Args, Debug)]
+#[derive(Parser, Debug)]
 pub struct Consumer{
 
-    /// origin Network to deploy contract from
+    /// origin network to deploy contract from
     #[arg(short, long = "from-network")]
     origin_network: RainNetworks, 
 
@@ -26,15 +27,15 @@ pub struct Consumer{
     #[arg(short ='d' , long = "from-deployer")]
     from_deployer: String, 
 
-    /// origin network interpreter
+    /// target network interpreter
     #[arg(short ='I' , long = "to-interpreter")]
     to_interpreter: String,
 
-    /// origin network store
+    /// target network store
     #[arg(short ='S' , long = "to-store")]
     to_store: String,
 
-    /// origin network deployer
+    /// target network deployer
     #[arg(short ='D' , long = "to-deployer")]
     to_deployer: String,
 
