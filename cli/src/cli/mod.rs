@@ -8,6 +8,7 @@ pub mod validate;
 pub mod magic;
 pub mod solc;
 pub mod output;
+pub mod deploy;
 
 #[derive(Parser)]
 #[command(author, version, about, long_about = None)]
@@ -25,22 +26,25 @@ pub enum Meta {
     Magic(magic::Magic),
     Build(build::Build),
     #[command(subcommand)]
-    Solc(solc::Solc),
+    Solc(solc::Solc), 
+    #[command(subcommand)]
+    CrossDeploy(deploy::CrossDeploy)
 }
 
-pub fn dispatch(meta: Meta) -> Result<()> {
+pub async fn dispatch(meta: Meta) -> Result<()> {
     match meta {
         Meta::Schema(schema) => schema::dispatch(schema),
         Meta::Validate(validate) => validate::validate(validate),
         Meta::Magic(magic) => magic::dispatch(magic),
         Meta::Build(build) => build::build(build),
-        Meta::Solc(solc) => solc::dispatch(solc),
+        Meta::Solc(solc) => solc::dispatch(solc), 
+        Meta::CrossDeploy(deploy) => deploy::deploy(deploy).await 
     }
 }
 
-pub fn main() -> Result<()> {
+pub async fn main() -> Result<()> {
     tracing::subscriber::set_global_default(tracing_subscriber::fmt::Subscriber::new())?;
 
     let cli = Cli::parse();
-    dispatch(cli.meta)
+    dispatch(cli.meta).await 
 }
