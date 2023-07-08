@@ -1,11 +1,10 @@
 
 use ethers::providers::{Provider, Middleware, Http} ;
-use ethers::signers::LocalWallet;
 use ethers::types::{ H256,};
 use std::str::FromStr;
 use anyhow::{Result};
 
-use super::registry::{RainNetworks, Ethereum, Mumbai, Polygon};
+use super::registry::{RainNetworks, Ethereum, Mumbai, Polygon, Fuji};
 
 pub async fn get_transaction_data(from_network : &RainNetworks ,tx_hash : &String) -> Result<String> { 
 
@@ -18,6 +17,9 @@ pub async fn get_transaction_data(from_network : &RainNetworks ,tx_hash : &Strin
         },
         RainNetworks::Mumbai => {
             Mumbai::default().provider
+        },
+        RainNetworks::Fuji => {
+            Fuji::default().provider
         }
     } ; 
 

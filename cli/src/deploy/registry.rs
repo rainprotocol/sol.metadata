@@ -58,6 +58,23 @@ impl Default for Mumbai {
             chain_id :  String::from("80001") ,
         }
     }
+}   
+
+#[derive(Debug)]
+pub struct Fuji {
+    pub provider : String ,
+    pub scan_base_uri : String ,
+    pub chain_id : String , 
+}  
+
+impl Default for Fuji {
+    fn default() -> Fuji {
+        Fuji { 
+            provider : String::from("https://api.avax-test.network/ext/bc/C/rpc") ,
+            scan_base_uri : String::from("https://testnet.snowtrace.io/") ,
+            chain_id :  String::from("43113") , 
+        }
+    }
 }  
 
  #[derive(Debug)]
@@ -66,4 +83,5 @@ pub enum RainNetworks{
     Ethereum,
     Polygon,
     Mumbai,
+    Fuji
 }  

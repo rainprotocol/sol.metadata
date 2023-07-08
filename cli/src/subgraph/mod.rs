@@ -33,6 +33,9 @@ pub async fn get_transaction_hash(
         }
         RainNetworks::Mumbai => {
             Mumbai::default().url
+        },
+        RainNetworks::Fuji => {
+            String::from("")
         }
     } ; 
  
