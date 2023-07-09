@@ -67,18 +67,18 @@ pub async fn deploy_contract(consumer : Consumer)  -> Result<()> {
             consumer.transaction_hash
         ).await? ; 
 
-        let (url,chain_id,scan_base_uri) = match consumer.to_network.unwrap() {
+        let (url,chain_id) = match consumer.to_network.unwrap() {
             RainNetworks::Ethereum => {
-                (Ethereum::default().provider,Ethereum::default().chain_id,Ethereum::default().scan_base_uri)
+                (Ethereum::default().provider,Ethereum::default().chain_id)
             } ,
             RainNetworks::Polygon => {
-                (Polygon::default().provider,Polygon::default().chain_id,Polygon::default().scan_base_uri)
+                (Polygon::default().provider,Polygon::default().chain_id)
             },
             RainNetworks::Mumbai => {
-                (Mumbai::default().provider,Mumbai::default().chain_id,Mumbai::default().scan_base_uri)
+                (Mumbai::default().provider,Mumbai::default().chain_id)
             },
             RainNetworks::Fuji => {
-                (Fuji::default().provider,Fuji::default().chain_id,Fuji::default().scan_base_uri)
+                (Fuji::default().provider,Fuji::default().chain_id)
             }
         } ; 
             
@@ -94,13 +94,19 @@ pub async fn deploy_contract(consumer : Consumer)  -> Result<()> {
 
         let tx = client.send_transaction(tx, None).await?;   
 
-        let receipt = tx.confirmations(6).await?.unwrap(); 
+        let receipt = tx.confirmations(6).await?.unwrap();  
 
+        let print_str = format!(
+            "{}{}{}{}{}" ,
+            String::from("\nContract Deployed !!\n#################################\n✅ Hash : "),
+            &serde_json::to_string_pretty(&receipt.transaction_hash).unwrap().to_string(), 
+            String::from("\nContract Address: "),
+            serde_json::to_string_pretty(&receipt.contract_address.unwrap()).unwrap(),
+            String::from("\n-----------------------------------\n")
+        ) ; 
         println!(
-            "\nContract Deployed !!\n#################################\n✅ Hash : {}\nContract : {}/{}\n-----------------------------------\n" ,
-            serde_json::to_string(&receipt.transaction_hash).unwrap().to_string(),
-            &scan_base_uri,
-            serde_json::to_string(&receipt.contract_address.unwrap()).unwrap().to_string(),
+           "{}",
+           print_str
         ) ;
 
         Ok(())
