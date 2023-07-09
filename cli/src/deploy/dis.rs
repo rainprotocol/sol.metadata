@@ -2,13 +2,13 @@ use clap::{Parser};
 
 #[derive(Parser,Clone)]
 pub struct DISpair {
-    pub interpreter : String ,
-    pub store : String ,
-    pub deployer : String ,
+    pub interpreter : Option<String> ,
+    pub store : Option<String> ,
+    pub deployer : Option<String> ,
 }  
 
 impl DISpair {
-    pub fn new(i : String, s : String, d : String) -> DISpair {
+    pub fn new(i : Option<String>, s : Option<String>, d : Option<String>) -> DISpair {
         DISpair { interpreter: i, store: s, deployer: d }
     }
 }
@@ -21,18 +21,25 @@ pub fn replace_dis_pair(
     to_dis : &DISpair
 ) -> Option<String> { 
 
-   let mut ret_str = tx_data.clone().to_lowercase() ;  
+   let mut ret_str = tx_data.to_lowercase() ;  
 
-   if tx_data.contains(&from_dis.interpreter[2..].to_lowercase()){
-       ret_str = ret_str.replace(&from_dis.interpreter[2..].to_lowercase(), &to_dis.interpreter[2..].to_lowercase()) ; 
+   // Both the counterparties should be provided
+   if from_dis.interpreter.as_ref().is_some() && to_dis.interpreter.as_ref().is_some() {
+        if tx_data.contains(&from_dis.interpreter.as_ref().unwrap()[2..].to_lowercase()){
+            ret_str = ret_str.replace(&from_dis.interpreter.as_ref().unwrap()[2..].to_lowercase(), &to_dis.interpreter.as_ref().unwrap()[2..].to_lowercase()) ; 
+        }
    } 
-   if tx_data.contains(&from_dis.store[2..].to_lowercase()){
-       ret_str = ret_str.replace(&from_dis.store[2..].to_lowercase(), &to_dis.store[2..].to_lowercase()) ; 
-   } 
-   if tx_data.contains(&from_dis.deployer[2..].to_lowercase()){
-       ret_str = ret_str.replace(&from_dis.deployer[2..].to_lowercase(), &to_dis.deployer[2..].to_lowercase()) ; 
+   if from_dis.store.is_some() && to_dis.store.is_some() {
+        if tx_data.contains(&from_dis.store.as_ref().unwrap()[2..].to_lowercase()){
+            ret_str = ret_str.replace(&from_dis.store.as_ref().unwrap()[2..].to_lowercase(), &to_dis.store.as_ref().unwrap()[2..].to_lowercase()) ; 
+        }
    }
-
+   if from_dis.store.is_some() && to_dis.store.is_some() { 
+        if tx_data.contains(&from_dis.deployer.as_ref().unwrap()[2..].to_lowercase()){
+            ret_str = ret_str.replace(&from_dis.deployer.as_ref().unwrap()[2..].to_lowercase(), &to_dis.deployer.as_ref().unwrap()[2..].to_lowercase()) ; 
+        }
+   }
+    
     Some(ret_str)
 }
 

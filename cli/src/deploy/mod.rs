@@ -4,7 +4,7 @@ use crate::{subgraph::get_transaction_hash, cli::deploy::Consumer, deploy::regis
 use self::{registry::{RainNetworks, Ethereum, Mumbai, Polygon}, transaction::get_transaction_data, dis::{DISpair, replace_dis_pair}}; 
 use ethers::{providers::{Provider, Middleware, Http}} ; 
 use ethers::{signers::LocalWallet, types::{Eip1559TransactionRequest, U64}, prelude::SignerMiddleware};
-use std::str::FromStr;
+use std::{str::FromStr};
 pub mod registry; 
 use anyhow::anyhow; 
 
@@ -15,16 +15,31 @@ pub async fn deploy_data(
     from_network : RainNetworks ,
     contract_address : String ,
     from_dis : DISpair , 
-    to_dis : DISpair
+    to_dis : DISpair ,
+    tx_hash : Option<String>
 ) -> Result<String> {    
-    // Get tx hash
-    let tx_data = get_transaction_hash(&from_network, &contract_address).await? ;  
-    // Get tx data
-    let tx_data = get_transaction_data(&from_network, &tx_data).await? ;  
-    // Replace DIS instances 
-    let tx_data = replace_dis_pair(&tx_data,&from_dis,&to_dis).unwrap() ;  
 
-    Ok(tx_data)
+    match tx_hash {
+        Some(hash) => { 
+            // Get tx data
+            let tx_data = get_transaction_data(&from_network, &hash).await? ;  
+            // Replace DIS instances 
+            let tx_data = replace_dis_pair(&tx_data,&from_dis,&to_dis).unwrap() ;  
+
+            Ok(tx_data)
+        } ,
+        None => {
+            // Get tx hash
+            let tx_data = get_transaction_hash(&from_network, &contract_address).await? ;  
+            // Get tx data
+            let tx_data = get_transaction_data(&from_network, &tx_data).await? ;  
+            // Replace DIS instances 
+            let tx_data = replace_dis_pair(&tx_data,&from_dis,&to_dis).unwrap() ;  
+
+            Ok(tx_data)
+        }
+    }
+    
 }  
 
 
@@ -48,7 +63,8 @@ pub async fn deploy_contract(consumer : Consumer)  -> Result<()> {
                 consumer.to_interpreter,
                 consumer.to_store,
                 consumer.to_deployer
-            ) 
+            ) ,
+            consumer.transaction_hash
         ).await? ; 
 
         let (url,chain_id,scan_base_uri) = match consumer.to_network.unwrap() {
@@ -103,10 +119,11 @@ pub async fn deploy_contract(consumer : Consumer)  -> Result<()> {
                             consumer.to_interpreter,
                             consumer.to_store,
                             consumer.to_deployer
-                        ) 
+                        ) ,
+                        consumer.transaction_hash
         ).await? ;
 
-        println!("{}",tx_data) ;
+        println!("\n{}",tx_data) ;
         Ok(())
 
     }
